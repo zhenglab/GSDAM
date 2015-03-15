@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="andbmp.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="106" topLine="21" />
+	</File>
+	<File name="bidui.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="848" topLine="24" />
+	</File>
+	<File name="binary2.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="143" topLine="0" />
+	</File>
+	<File name="computerfour.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="1391" topLine="0" />
+	</File>
+	<File name="contourimage.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="966" topLine="27" />
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="15134" topLine="403" />
+	</File>
+</CodeBlocks_layout_file>
