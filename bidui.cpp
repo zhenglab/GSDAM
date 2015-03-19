@@ -1,6 +1,6 @@
 #include <iostream>
-#include <cv.h>
-#include <highgui.h>
+#include </usr/local/include/opencv/cv.h>
+#include </usr/local/include/opencv/highgui.h>
 using namespace std;
 typedef IplImage* IPL;
 IPL bidui(IPL src1,IPL src2)
@@ -11,8 +11,8 @@ IPL bidui(IPL src1,IPL src2)
   //IplImage * img=0;
   //IplImage * img2=0;
     int height,width,step,channels;
-  int height2,width2,step2,channels2;
-   int height3,width3,step3,channels3;
+  int step2,channels2;//height2,width2,s
+   int step3,channels3;//height3,width3,
   int i,j,k;
   CvScalar s1,s2;
       s1.val[0] = 0.000000;

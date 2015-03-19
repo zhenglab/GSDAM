@@ -1,6 +1,6 @@
-#include "cv.h"
-#include "cxcore.h"
-#include "highgui.h"
+#include </usr/local/include/opencv/cv.h>
+#include </usr/local/include/opencv/highgui.h>
+#include "/usr/local/include/opencv/cxcore.h"
 #include <iostream>
 using namespace std;
 
@@ -27,7 +27,7 @@ IplImage* contourimage(IplImage* pImg)
             if(tmparea > maxarea )
             {
                 maxarea = tmparea ;
-                cout<<maxarea<<endl;
+//                cout<<maxarea<<endl;
                 contours=contour;
             }
             else
