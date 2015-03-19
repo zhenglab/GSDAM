@@ -17,8 +17,8 @@ PS: OpenCV2.4.9与3.0.0的环境下都可以运行
     2.在终端上打开以上路径，使用命令如 ./GSDAM *.jpg，其中*.jpg为输入图像，位于本目录下
     3.默认情况下，不设置输出文件名，则默认输出*-Bidui.jpg
       可以多个设置参数与输出文件名，例如 " ./GSDAM input.jpg  -x x.tif -y y.tif    "
-     -x，-y  分别为参数    x.tif，y.tif分别为自己设置的输出文件名
-     PS:仅支持tif，png，bmp和jpg格式,推荐保存为.tif
+     -x，-y  分别为参数    x.tif，y.tif分别为自己设置的输出文件名（仅支持tif，png，bmp，jpg,推荐保存为.tif）
+    
 
       参数说明：
      -g     灰度图   
@@ -35,7 +35,7 @@ PS: OpenCV2.4.9与3.0.0的环境下都可以运行
 
      输出信息说明：
      Done   		   输出成功
-     Wrong Format          输出图像存储格式错误
+     The Wrong Format      输出图像存储格式错误
      Error Option	   输入参数错误
 	
 		
