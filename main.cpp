@@ -1,34 +1,45 @@
 #include <iostream>
-#include "cv.h"
-#include "highgui.h"
+#include </usr/local/include/opencv/cv.h>
+#include </usr/local/include/opencv/highgui.h>
 #include <stdio.h>
+#include <string.h>
+#include<string>
+
 using namespace std;
 typedef IplImage* IPL;
 
 extern double computerfour(double,double,double,double,double *,double *,double *,double *);
-extern IPL binary2(IplImage*,IPL);//¶şÖµ»¯ºÍÏàÓëµÄº¯ÊıÂÀÁº³ÌĞòÖĞÓĞºÃ¼¸¸ö£¬ºóÃæÒªÁôÒâÓÃµÄÄÄÒ»¸ö£»
+extern IPL binary2(IplImage*,IPL);//äºŒå€¼åŒ–å’Œç›¸ä¸çš„å‡½æ•°å•æ¢ç¨‹åºä¸­æœ‰å¥½å‡ ä¸ªï¼Œåé¢è¦ç•™æ„ç”¨çš„å“ªä¸€ä¸ªï¼›
 extern IPL andbmp(IPL,IPL);
 extern IPL contourimage(IPL);
 extern IPL bidui(IPL,IPL);
+extern IPL save(IPL,  char *,int);
+extern int check(char*);
+
+
+//image_g   image_x    image_y     image_z      image_xz        image_yz        image_o
+//image_x_binary    image_y_binary      image_z_binary      image_xz_binary     image_yz_binary      image_xz_yz_binary
+//imagexz     imageyz       imagexzBF       imageyzBF       imgandxzb_yzbBF
+//imageSmooth     imageSmooth2          imagedialate    imagebi       imagerode       imagekai        contour_src
+//imageBidui
+
 
 int main(int argc, char* argv[])
 {
-    IPL src3=cvLoadImage(argv[1],0);//½«Í¼ÏñÎÄ¼ş¼ÓÔØÖÁÄÚ´æ£¬×Ô¶¯·ÖÅäÍ¼ÏñÊı¾İ½á¹¹ËùĞèµÄÄÚ´æ£¬¸Ãº¯ÊıÖ´ĞĞÍêºó½«·µ»ØÒ»¸öÖ¸Õë
-    //IPL dst=0;
+    IPL src3=cvLoadImage(argv[1],0);//å°†å›¾åƒæ–‡ä»¶åŠ è½½è‡³å†…å­˜ï¼Œè‡ªåŠ¨åˆ†é…å›¾åƒæ•°æ®ç»“æ„æ‰€éœ€çš„å†…å­˜ï¼Œè¯¥å‡½æ•°æ‰§è¡Œå®Œåå°†è¿”å›ä¸€ä¸ªæŒ‡é’ˆ
     IPL src = cvCreateImage( cvSize( src3 -> width+3, src3 -> height+3 ), IPL_DEPTH_8U, src3->nChannels);
     IPL src2=cvLoadImage(argv[1],1);
-    IPL imagex=cvCloneImage(src);
-    IPL imagey=cvCloneImage(src);
-    IPL imagez=cvCloneImage(src);
-    IPL imagexz=cvCloneImage(src);
-    IPL imageyz=cvCloneImage(src);
-    //IPL imgBF=cvCloneImage(src);
-    IPL imagexzBF=cvCloneImage(src);
-    IPL imageyzBF=cvCloneImage(src);
+     IPL image_x=cvCloneImage(src);
+     IPL image_y=cvCloneImage(src);
+     IPL  image_z=cvCloneImage(src);
+     IPL  image_xz=cvCloneImage(src);
+     IPL   image_yz=cvCloneImage(src);
+     IPL  image_xzBF=cvCloneImage(src);
+      IPL  image_yzBF=cvCloneImage(src);
 
     //IPL imagebinaryY=cvCloneImage(src);
     //IPL imageXandY=cvCloneImage(src);
-    //IPL src2=cvCloneImage(src);//x2ÊÇx¶şÖµ»¯ºó£»
+    //IPL src2=cvCloneImage(src);//x2æ˜¯xäºŒå€¼åŒ–åï¼›
    /* CvSize dst_cvsize;
     dst_cvsize.width = 300;
     dst_cvsize.height =300;
@@ -36,35 +47,35 @@ int main(int argc, char* argv[])
     cvResize(src2, dst, CV_INTER_LINEAR);
     string savingfile21(argv[1]);
     savingfile21.erase(savingfile21.find_last_of("."));
-    savingfile21 += "-Ëõ·ÅÍ¼.tif";
+    savingfile21 += "-ç¼©æ”¾å›¾.tif";
     cvSaveImage(savingfile21.c_str(),dst);*/
-    //cvSaveImage("Ëõ·Å.bmp",dst);
+    //cvSaveImage("ç¼©æ”¾.bmp",dst);
 
 
 
     /*int t1,t2,t3,t4,t5;
 
-        printf("ÖĞÖµÂË²¨1µÄ²ÎÊıÊÇ: \n");
+        printf("ä¸­å€¼æ»¤æ³¢1çš„å‚æ•°æ˜¯: \n");
         cin>>t1;
         //t1=atoi(argv[2]);
 
-        printf("ÖĞÖµÂË²¨2µÄ²ÎÊıÊÇ: \n");
+        printf("ä¸­å€¼æ»¤æ³¢2çš„å‚æ•°æ˜¯: \n");
         cin>>t2;
         //t2=atoi(argv[3]);
 
-        printf("±ÕÔËËãµÄ´ÎÊıÊÇ: \n");
+        printf("é—­è¿ç®—çš„æ¬¡æ•°æ˜¯: \n");
         cin>>t3;
         //t3=atoi(argv[4]);
 
-        printf("ÅòÕÍ¸¯Ê´µÄ´ÎÊıÊÇ£º\n");
+        printf("è†¨èƒ€è…èš€çš„æ¬¡æ•°æ˜¯ï¼š\n");
         cin>>t4;
         //t4=atoi(argv[5]);
 
-        printf("¿ªÔËËãµÄ´ÎÊıÊÇ£º\n");
+        printf("å¼€è¿ç®—çš„æ¬¡æ•°æ˜¯ï¼š\n");
         cin>>t5;
         //t5=atoi(argv[6]);*/
 
-    int height=src->height, width=src->width;//´Ë´¦×¢ÊÍËõ·ÅºóÈ¥µô
+    int height=src->height, width=src->width;//æ­¤å¤„æ³¨é‡Šç¼©æ”¾åå»æ‰
     double **c1;
     double **c2;
     double **c3;
@@ -76,7 +87,7 @@ int main(int argc, char* argv[])
     double **yzmap;
     //double **lengthmap;
 
-    c1 = new double*[width];//x·½Ïò½ÇµÄ½Ç¶È
+    c1 = new double*[width];//xæ–¹å‘è§’çš„è§’åº¦
     c2 = new double*[width];
     c3 = new double*[width];
     c4 = new double*[width];
@@ -85,16 +96,18 @@ int main(int argc, char* argv[])
     zmap=new double*[width];
     xzmap=new double*[width];
     yzmap=new double*[width];
-    //lengthmap=new double*[width];//lengthmap·¨ÏòÁ¿µÄÄ£¶ÔÓ¦µÄ»Ò¶ÈÍ¼Ïñ
+    //lengthmap=new double*[width];//lengthmapæ³•å‘é‡çš„æ¨¡å¯¹åº”çš„ç°åº¦å›¾åƒ
 
-    /*string savingfile(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile.erase(savingfile.find_last_of("."));
-    savingfile += "-»Ò¶ÈÍ¼.tif";
-    cvSaveImage(savingfile.c_str(),src3);*///ÊµÑéºóÈ¥³ı
 
-    //cvSaveImage("Img»Ò¶ÈÍ¼.tif",src);
+//#########################################################
+
+    //cvSaveImage("Imgç°åº¦å›¾.tif",src);
     //cvSmooth(src , imgBF , CV_BILATERAL,-1,50,0,11);
     //cvSaveImage("ImgBF.bmp",imgBF);
+
+//#########################################################
+
+
    cvCopyMakeBorder( src3, src, cvPoint( 1, 1 ), IPL_BORDER_CONSTANT );
 
     for(int i=0; i<width; i++)
@@ -115,7 +128,7 @@ int main(int argc, char* argv[])
 
     int x,y;
     CvScalar Ix0y0,Ix0y1,Ix1y1,Ix1y0;
-    double w1,w2,w3,* w1_z,* w2_z,* w3_z,dis,* dis_z;//¿É²»¿ÉÒÔÖ»¶¨ÒåÖ¸ÕëÀàĞÍµÄ£¿
+    double w1,w2,w3,* w1_z,* w2_z,* w3_z,dis,* dis_z;//å¯ä¸å¯ä»¥åªå®šä¹‰æŒ‡é’ˆç±»å‹çš„ï¼Ÿ
 
 
     for(y=0; y<height-1; y++)
@@ -131,11 +144,11 @@ int main(int argc, char* argv[])
             w3_z=&w3;
             dis_z=&dis;
             computerfour(Ix0y0.val[0],Ix0y1.val[0],Ix1y0.val[0],Ix1y1.val[0],w1_z,w2_z,w3_z,dis_z);
-            //´Ëº¯Êı×÷ÓÃÊÇ·Ö±ğÇó³öxyz·½ÏòµÄÈı¸ö¼Ğ½Ç´óĞ¡
-            c1[x][y]=w1;//w1ÊÇ·¨ÏòÁ¿ÓëÓëxÖáµÄ¼Ğ½Ç£»
+            //æ­¤å‡½æ•°ä½œç”¨æ˜¯åˆ†åˆ«æ±‚å‡ºxyzæ–¹å‘çš„ä¸‰ä¸ªå¤¹è§’å¤§å°
+            c1[x][y]=w1;//w1æ˜¯æ³•å‘é‡ä¸ä¸xè½´çš„å¤¹è§’ï¼›
             c2[x][y]=w2;
             c3[x][y]=w3;
-            //c4[x][y]=dis;//disÊÇ·¨ÏòÁ¿µÄÄ£
+            //c4[x][y]=dis;//disæ˜¯æ³•å‘é‡çš„æ¨¡
         }
     }
 double xmax,xmin,ymax,ymin,zmax,zmin;
@@ -190,31 +203,13 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
             xmap[x][y]=255*(c1[x][y]-xmin)/(xmax-xmin);
             ymap[x][y]=255*(c2[x][y]-ymin)/(ymax-ymin);
             zmap[x][y]=255*(c3[x][y]-zmin)/(zmax-zmin);
-            cvSet2D(imagex,y,x,cvRealScalar(xmap[x][y]));
-            cvSet2D(imagey,y,x,cvRealScalar(ymap[x][y]));
-            cvSet2D(imagez,y,x,cvRealScalar(zmap[x][y]));
+            cvSet2D(image_x,y,x,cvRealScalar(xmap[x][y]));
+            cvSet2D(image_y,y,x,cvRealScalar(ymap[x][y]));
+            cvSet2D(image_z,y,x,cvRealScalar(zmap[x][y]));
 
         }
     }
 
-    /*string savingfile2(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile2.erase(savingfile2.find_last_of("."));
-    savingfile2 += "--x.tif";
-    cvSaveImage(savingfile2.c_str(),imagex);
-
-    string savingfile3(argv[1]);
-    savingfile3.erase(savingfile3.find_last_of("."));
-    savingfile3 += "-y.tif";
-    cvSaveImage(savingfile3.c_str(), imagey);
-
-    string savingfile4(argv[1]);
-    savingfile4.erase(savingfile4.find_last_of("."));
-    savingfile4 += "-z.tif";
-    cvSaveImage(savingfile4.c_str(), imagez);*///ÊµÑéºóÈ¥³ı
-
-     //cvSaveImage("ImgX.tif",imagex);
-     //cvSaveImage("ImgY.tif",imagey);
-     //cvSaveImage("ImgZ.tif",imagez);
 
 
 
@@ -224,20 +219,13 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
         {
             xzmap[x][y]=sqrt(xmap[x][y]*xmap[x][y]+zmap[x][y]*zmap[x][y]);
             yzmap[x][y]=sqrt(ymap[x][y]*ymap[x][y]+zmap[x][y]*zmap[x][y]);
-            cvSet2D(imagexz,y,x,cvRealScalar(xzmap[x][y]));
-            cvSet2D(imageyz,y,x,cvRealScalar(yzmap[x][y]));
+            cvSet2D(image_xz,y,x,cvRealScalar(xzmap[x][y]));
+            cvSet2D(image_yz,y,x,cvRealScalar(yzmap[x][y]));
          }
     }
-    /*string savingfile20(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile20.erase(savingfile20.find_last_of("."));
-    savingfile20 += "-XZ1.tif";
-    cvSaveImage(savingfile20.c_str(), imagexz);
-    string savingfile5(argv[1]);
-    savingfile5.erase(savingfile5.find_last_of("."));
-    savingfile5 += "-YZ1.tif";
-    cvSaveImage(savingfile5.c_str(), imageyz);*///ÊµÑéºóÈ¥³ı
-     //cvSaveImage("ImgXZ1.tif",imagexz);
-     //cvSaveImage("ImgYZ1.tif",imageyz);
+
+
+
     double xzmap_max=xzmap[0][0];
     double xzmap_min=xzmap[0][0];
     double yzmap_max=yzmap[0][0];
@@ -268,38 +256,20 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
             else {}
         }
     }
+
     for(y=0; y<height-1; y++)
     {
         for(x=0; x<width-1; x++)
         {
             xzmap[x][y]=255*( (xzmap[x][y]-xzmap_min)/(xzmap_max-xzmap_min));
             yzmap[x][y]=255*( (yzmap[x][y]-yzmap_min)/(yzmap_max-yzmap_min));
-            cvSet2D(imagexz,y,x,cvRealScalar(xzmap[x][y]));
-            cvSet2D(imageyz,y,x,cvRealScalar(yzmap[x][y]));
+            cvSet2D(image_xz,y,x,cvRealScalar(xzmap[x][y]));
+            cvSet2D(image_yz,y,x,cvRealScalar(yzmap[x][y]));
             }
     }
-    /*string savingfile6(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile6.erase(savingfile6.find_last_of("."));
-    savingfile6 += "-XZ2.tif";
-    cvSaveImage(savingfile6.c_str(), imagexz);*///ÊµÑéºóÈ¥³ı
-     //cvSaveImage("Imgxz.tif",imagexz);
-     cvSmooth(imagexz,imagexzBF,CV_BILATERAL,-1,1,40,20);
-     /*string savingfile7(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile7.erase(savingfile7.find_last_of("."));
-    savingfile7 += "-xzBF.tif";
-    cvSaveImage(savingfile7.c_str(), imagexzBF);*///ÊµÑéºóÈ¥³ı
-     //cvSaveImage("imagexzBF.tif",imagexzBF);
-     /*string savingfile8(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile8.erase(savingfile8.find_last_of("."));
-    savingfile8 += "-YZ2.tif";
-    cvSaveImage(savingfile8.c_str(), imageyz);*///ÊµÑéºóÈ¥³ı
-     //cvSaveImage("Imgyz.bmp",imageyz);
-     cvSmooth(imageyz,imageyzBF,CV_BILATERAL,-1,1,40,20);
-     /*string savingfile9(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile9.erase(savingfile9.find_last_of("."));
-    savingfile9 += "-yzBF.tif";
-    cvSaveImage(savingfile9.c_str(), imageyzBF);*///ÊµÑéºóÈ¥³ı
-     //cvSaveImage("imageyzBF.tif",imageyzBF);
+
+
+
      for(int i=0; i<width; i++)
     {
         delete []c1[i];
@@ -324,10 +294,18 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
     delete []yzmap;
     //delete []lengthmap;
 
+
+     cvSmooth(image_xz,image_xzBF,CV_BILATERAL,-1,1,40,20);
+     cvSmooth(image_yz,image_yzBF,CV_BILATERAL,-1,1,40,20);
+
+
+//#########################################################
+
+
     /*IPL imgx_binary=cvCreateImage(cvGetSize(imagex),IPL_DEPTH_8U,1);
-    //´´½¨ÁËÒ»¸öÓëimagexÍ¼Ïñ´óĞ¡Ò»ÖÂµÄµ¥Í¨µÀÍ¼Ïñ£¬Éî¶ÈÊÇ8£¨2µÄ8´Î·½À´±íÊ¾Ò»¸öÏñËØ£¬¾ÍÊÇ256É«£©
-    cvZero(imgx_binary);//cvZeroÊÇ¶ÔÍ¼ÏñÇåÁã£»
-    imgx_binary=binary2(imagex,imgx_binary);//½«Í¼ÏñimagexÓÃ¸Ä½øµÄ´ó½ò·¨½øĞĞ¶şÖµ»¯£¬·µ»ØµÄÊÇimgx_binary£»
+    //åˆ›å»ºäº†ä¸€ä¸ªä¸imagexå›¾åƒå¤§å°ä¸€è‡´çš„å•é€šé“å›¾åƒï¼Œæ·±åº¦æ˜¯8ï¼ˆ2çš„8æ¬¡æ–¹æ¥è¡¨ç¤ºä¸€ä¸ªåƒç´ ï¼Œå°±æ˜¯256è‰²ï¼‰
+    cvZero(imgx_binary);//cvZeroæ˜¯å¯¹å›¾åƒæ¸…é›¶ï¼›
+    imgx_binary=binary2(imagex,imgx_binary);//å°†å›¾åƒimagexç”¨æ”¹è¿›çš„å¤§æ´¥æ³•è¿›è¡ŒäºŒå€¼åŒ–ï¼Œè¿”å›çš„æ˜¯imgx_binaryï¼›
     cvSaveImage("imgx_binary.tif",imgx_binary);
 
     IPL imgy_binary=cvCreateImage(cvGetSize(imagey),IPL_DEPTH_8U,1);
@@ -343,7 +321,7 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
 
     /*IPL imagexz_binary=cvCreateImage(cvGetSize(imagexz),IPL_DEPTH_8U,1);
     cvZero(imagexz_binary);
-    imagexz_binary=binary2(imagexz,imagexz_binary);//´ó½ò·¨¶şÖµ»¯£¬xz·½ÏòÍ¶Ó°Í¼Ïñ
+    imagexz_binary=binary2(imagexz,imagexz_binary);//å¤§æ´¥æ³•äºŒå€¼åŒ–ï¼Œxzæ–¹å‘æŠ•å½±å›¾åƒ
     string savingfile(argv[1]);
     savingfile.erase(savingfile.find_last_of("."));
     savingfile += "-xzBinary.tif";
@@ -365,113 +343,250 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
     cvSaveImage(savingfile.c_str(), imageandxzb_yzb);
     //cvSaveImage("imgandxzb_yzb.tif",imgandxzb_yzb);*/
 
-    IPL imagexzBF_binary=cvCreateImage(cvGetSize(imagexz),IPL_DEPTH_8U,1);
-    cvZero(imagexzBF_binary);
-    imagexzBF_binary=binary2(imagexzBF,imagexzBF_binary);//´ó½ò·¨¶şÖµ»¯£¬xz·½ÏòÍ¶Ó°Í¼Ïñ
-    /*string savingfile10(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile10.erase(savingfile10.find_last_of("."));
-    savingfile10 += "-xzBFBinary.tif";
-    cvSaveImage(savingfile10.c_str(), imagexzBF_binary);*///ÊµÑéºóÈ¥³ı
-    //cvSaveImage("imgxzBF_binary.tif",imagexzBF_binary);
-
-    IPL imageyzBF_binary=cvCreateImage(cvGetSize(imageyz),IPL_DEPTH_8U,1);
-    imageyzBF_binary=binary2(imageyzBF,imageyzBF_binary);
-    /*string savingfile11(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile11.erase(savingfile11.find_last_of("."));
-    savingfile11 += "-yzBFBinary.tif";
-    cvSaveImage(savingfile11.c_str(), imageyzBF_binary);*///ÊµÑéºóÈ¥³ı
-    //cvSaveImage("imgyzBF_binary.tif",imageyzBF_binary);
-
-    IPL imgandxzb_yzbBF=andbmp(imagexzBF_binary,imageyzBF_binary);
-    /*string savingfile12(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile12.erase(savingfile12.find_last_of("."));
-    savingfile12 += "-xzbANDyzb.tif";
-    cvSaveImage(savingfile12.c_str(), imgandxzb_yzbBF);*///ÊµÑéºóÈ¥³ı
-    //cvSaveImage("imgandxzb_yzbBF.tif",imgandxzb_yzbBF);
+//#########################################################
 
 
-    IPL dilate_src=cvCloneImage(imgandxzb_yzbBF);
-    IPL imagedilate=cvCloneImage(dilate_src);
-    IPL imagekai=cvCloneImage(dilate_src);
-    IPL imagebi=cvCloneImage(dilate_src);
-    //IPL imageErode=cvCloneImage(dilate_src);
-    //IPL imagesmoothG=cvCloneImage(dilate_src);
+    IPL image_xzBF_binary=cvCreateImage(cvGetSize(image_xz),IPL_DEPTH_8U,1);
+    cvZero(image_xzBF_binary);
+    image_xzBF_binary=binary2(image_xzBF,image_xzBF_binary);//å¤§æ´¥æ³•äºŒå€¼åŒ–ï¼Œxzæ–¹å‘æŠ•å½±å›¾åƒ
+
+
+    IPL image_yzBF_binary=cvCreateImage(cvGetSize(image_yz),IPL_DEPTH_8U,1);
+    image_yzBF_binary=binary2(image_yzBF,image_yzBF_binary);
+
+
+    IPL img_andxzb_yzbBF=andbmp(image_xzBF_binary,image_yzBF_binary);
+
+
+
+    IPL dilate_src=cvCloneImage(img_andxzb_yzbBF);
     IPL imagesmoothM=cvCloneImage(dilate_src);
     IPL imagesmoothM2=cvCloneImage(dilate_src);
-    //IPL imagesmoothB=cvCloneImage(dilate_src);
-    IplConvKernel *element=0;
-    IplConvKernel *element2=0;
+
+    cvSmooth(dilate_src,imagesmoothM,CV_MEDIAN,5,5);
+    cvSmooth(imagesmoothM,imagesmoothM2,CV_MEDIAN,3,3);
+
+    IPL image_dilate=cvCloneImage(dilate_src);
+    IPL image_kai=cvCloneImage(dilate_src);
+    IPL image_bi=cvCloneImage(dilate_src);
     IPL image_temp=cvCloneImage(dilate_src);
     cvSetZero(image_temp);
+//#########################################################
+    //IPL imageErode=cvCloneImage(dilate_src);
+    //IPL imagesmoothG=cvCloneImage(dilate_src);
+//#########################################################
 
-    //cvSmooth(imagedilate,imagesmoothB,CV_BILATERAL,-1,20,20,20);
-    //cvSaveImage("imageSmoothB.bmp",imagesmoothB);
-    cvSmooth(imagedilate,imagesmoothM,CV_MEDIAN,5,5);
-    cvSmooth(imagesmoothM,imagesmoothM2,CV_MEDIAN,3,3);
-    /*string savingfile13(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile13.erase(savingfile13.find_last_of("."));
-    savingfile13 += "-SmoothM.tif";
-    cvSaveImage(savingfile13.c_str(), imagesmoothM2);*///ÊµÑéºóÈ¥³ı
-    //cvSaveImage("imageSmoothM.tif",imagesmoothM2);
-    //cvSmooth(imagedilate,imagesmoothG,CV_GAUSSIAN,3,3,0,0); //¸ßË¹ÂË²¨
-    //cvSaveImage("imageSmoothG.bmp",imagesmoothG);
+    IplConvKernel *element=0;
+   IplConvKernel *element2=0;
 
     element=cvCreateStructuringElementEx(3,3,1,1,CV_SHAPE_ELLIPSE);
     element2=cvCreateStructuringElementEx(2,2,0,0,CV_SHAPE_ELLIPSE);
-    //cvErode(imagekai,imageErode,element,2);//µü´ú´ÎÊıÔİ¶¨Îª£»
+
+
+    //cvErode(imagekai,imageErode,element,2);//è¿­ä»£æ¬¡æ•°æš‚å®šä¸ºï¼›
 	//cvSaveImage("imageErode.bmp",imageErode);
     //cvMorphologyEx(imagesmoothM2,imagekai,image_temp,element,CV_MOP_OPEN,3);
     //cvSaveImage("imagekai.bmp",imagekai);
-    cvMorphologyEx(imagesmoothM2,imagebi,image_temp,element,CV_MOP_CLOSE,5);
-    /*string savingfile14(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile14.erase(savingfile14.find_last_of("."));
-    savingfile14 += "-BI.tif";
-    cvSaveImage(savingfile14.c_str(), imagebi);*///ÊµÑéºóÈ¥³ı
-    //cvSaveImage("imagebi.tif",imagebi);
+
+
+//#########################################################
+
    /* cvFloodFill(src3,cvPoint(0,0),cvScalar(255),cvScalarAll(0),cvScalarAll(0),NULL,4,NULL);
-    string savingfile22(argv[1]);//ÊµÑéºóÈ¥
+    string savingfile22(argv[1]);//å®éªŒåå»
     savingfile22.erase(savingfile22.find_last_of("."));
     savingfile22 += "-FF.tif";
-    cvSaveImage(savingfile22.c_str(), src3);*///ÊµÑéºóÈ¥³ı
+    cvSaveImage(savingfile22.c_str(), src3);*///å®éªŒåå»é™¤
     //element2=cvCreateStructuringElementEx(2,2,0,0,CV_SHAPE_RECT);
-	cvDilate(imagebi,imagedilate,element2,5);//¿ÉÓÃ
-	/*string savingfile15(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile15.erase(savingfile15.find_last_of("."));
-    savingfile15 += "-dilate.tif";
-    cvSaveImage(savingfile15.c_str(), imagedilate);*///ÊµÑéºóÈ¥³ı
-	//cvSaveImage("imagedilate.tif",imagedilate);
-    IPL contour_src=contourimage(imagedilate);//ÌáÈ¡³ö×î´óµÄÂÖÀª
 
-    /*string savingfile16(argv[1]);
-    savingfile16.erase(savingfile16.find_last_of("."));
-    savingfile16 += "-Contour.tif";
-    cvSaveImage(savingfile16.c_str(), contour_src);*/
-
-   cvErode(contour_src,contour_src,element2,5);//¿ÉÓÃ
-    /*string savingfile17(argv[1]);
-    savingfile17.erase(savingfile17.find_last_of("."));
-    savingfile17 += "-Erode.tif";
-    cvSaveImage(savingfile17.c_str(), contour_src);*/
-
-    cvMorphologyEx(contour_src,imagekai,image_temp,element,CV_MOP_OPEN,3);//¿ÉÓÃ
-    /*string savingfile18(argv[1]);//ÊµÑéºóÈ¥³ı
-    savingfile18.erase(savingfile18.find_last_of("."));
-    savingfile18 += "-Kai.tif";
-    cvSaveImage(savingfile18.c_str(), imagekai);*///ÊµÑéºóÈ¥³ı
-
-
-    IPL imgBidui=bidui(src2,imagekai);
-    string savingfile19(argv[1]);
-    savingfile19.erase(savingfile19.find_last_of("."));
-    savingfile19 += "-Bidui.tif";
-    cvSaveImage(savingfile19.c_str(), imgBidui);
+//#########################################################
 
 
 
+cvMorphologyEx(imagesmoothM2,image_bi,image_temp,element,CV_MOP_CLOSE,5);
+cvDilate(image_bi,image_dilate,element2,5);//å¯ç”¨
+IPL contour_src=contourimage(image_dilate);//æå–å‡ºæœ€å¤§çš„è½®å»“
+cvErode(contour_src,contour_src,element2,5);//å¯ç”¨
+cvMorphologyEx(contour_src,image_kai,image_temp,element,CV_MOP_OPEN,3);//å¯ç”¨
 
-     cvReleaseImage(&imagex);
-     cvReleaseImage(&imagey);
-     cvReleaseImage(&imagez);
+
+//#########################################################
+
+//    cvMorphologyEx(imagesmoothM2,image_bi,image_temp,element,CV_MOP_CLOSE,5);
+//    IPL contour_src=contourimage(image_bi);//æå–å‡ºæœ€å¤§çš„è½®å»“
+//    cvMorphologyEx(contour_src,image_kai,image_temp,element,CV_MOP_OPEN,3);//å¯ç”¨
+
+//#########################################################
+
+//#####################################################3
+
+//    for(int n=2;n<argc;n++)
+//    {
+//                char *image_path=argv[n];
+//                if(!strcmp(image_path,"-g"))
+//                           save(src3,argv[1],str_gray);
+//                else if(!strcmp(image_path,"-x"))
+//                            save(imagex,argv[1],str_x);
+//                else if(!strcmp(image_path,"-xz"))
+//                            save(imagexz,argv[1],str_xz);
+//                else if(!strcmp(image_path,"-yz"))
+//                            save(imageyz,argv[1],str_yz);
+//               else if(!strcmp(image_path,"-y"))
+//                            save(imagey,argv[1],str_y);
+//                else if(!strcmp(image_path,"-z"))
+//                            save(imagez,argv[1],str_z);
+//                else if(!strcmp(image_path,"-o"))
+//                            save(imgBidui,argv[1],str_o);
+//                else
+//                            save(imgBidui,argv[1],str_o);
+//        }
+
+
+
+
+        IPL   imgBidui=bidui(src2,image_kai);
+
+int flag;
+if(argc==2)
+{
+            flag=0;
+            save(imgBidui,argv[1],flag);
+}
+
+else
+{
+            flag=1;
+            for(int n=2;n<argc;n+=2)
+            {
+                        if(check(argv[n]))
+                        {
+                                    //char *image_path=argv[n+1];
+                                    if(check(argv[n+1]))
+                                    {
+                                                if (!strcmp(argv[n],"-g"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(src3,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-x"))
+                                                {
+                                                        cout << argv[n+1] <<":   "  ;
+                                                        save(image_x,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-xz"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(image_xz,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-yz"))
+                                                {
+                                                        cout << argv[n+1] << ":   " ;
+                                                        save(image_yz,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-y"))
+                                                {
+                                                        cout << argv[n+1] <<":   "  ;
+                                                        save(image_y,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-z"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(image_z,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-o"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(imgBidui,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-k"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(image_kai,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-b"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(image_bi,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                                else if(!strcmp(argv[n],"-c"))
+                                                {
+                                                        cout << argv[n+1] <<":   " ;
+                                                        save(contour_src,argv[n+1],flag);
+                                                        cout << "Done" <<endl;
+                                                }
+                                        }
+                                       else
+                                              cout << argv[n+1]  <<":   "<<"Wrong Format" <<endl;
+                            }
+                            else
+                                    cout << argv[n]  <<":   " <<"Error Option" <<endl;
+            }
+}
+//#########################################################
+
+
+//#########################################################
+
+
+//       IPL imgBidui=bidui(src2,image_kai);
+//
+//
+//    if(argc==2)
+//                save(imgBidui,argv[1],str_o);
+//    else
+//    {
+//            for(int n=2;n<argc;n+=2)
+//            {
+//                    char *image_path=argv[n+1];
+//                    if (!strcmp(argv[n],"-g"))
+//                            save_exact(src3,image_path);
+//                    else if(!strcmp(argv[n],"-x"))
+//                            save_exact(image_x,image_path);
+//                    else if(!strcmp(argv[n],"-xz"))
+//                                save_exact(image_xz,image_path);
+//                    else if(!strcmp(argv[n],"-yz"))
+//                                save_exact(image_yz,image_path);
+//                    else if(!strcmp(argv[n],"-y"))
+//                                save_exact(image_y,image_path);
+//                    else if(!strcmp(argv[n],"-z"))
+//                                save_exact(image_z,image_path);
+//                    else if(!strcmp(argv[n],"-o"))
+//                                save_exact(imgBidui,image_path);
+//                    else
+//                                save_exact(imgBidui,image_path);
+//            }
+//    }
+//
+
+//#########################################################
+
+
+//
+//    IPL imgBidui=bidui(src2,imagekai);
+//    //string savingfile19(argv[1]);
+//    string savingfile19(argv[1]);
+//    savingfile19.erase(savingfile19.find_last_of("."));
+//    savingfile19 += "-Bidui.tif";
+//   cvSaveImage(savingfile19.c_str(), imgBidui);
+
+
+//#########################################################
+
+
+
+
+
+     cvReleaseImage(&image_x);
+     cvReleaseImage(&image_y);
+     cvReleaseImage(&image_z);
      //cvReleaseImage(&imgx_binary);
      //cvReleaseImage(&imgy_binary);
      //cvReleaseImage(&imgz_binary);
@@ -479,17 +594,17 @@ double xmax,xmin,ymax,ymin,zmax,zmin;
      //cvReleaseImage(&imagexz_binary);
      //cvReleaseImage(&imageyz_binary);
      //cvReleaseImage(&imgandxzb_yzb);
-     cvReleaseImage(&imagedilate);
-     cvReleaseImage(&imagexzBF_binary);
-     cvReleaseImage(&imageyzBF_binary);
-     cvReleaseImage(&imgandxzb_yzbBF);
+     cvReleaseImage(&image_dilate);
+     cvReleaseImage(&image_xzBF_binary);
+     cvReleaseImage(&image_yzBF_binary);
+     cvReleaseImage(&img_andxzb_yzbBF);
      cvReleaseImage(&imagesmoothM2);
-     cvReleaseImage(&imagebi);
+     cvReleaseImage(&image_bi);
      cvReleaseImage(&contour_src);
-     cvReleaseImage(&imagekai);
+     cvReleaseImage(&image_kai);
      cvReleaseImage(&imgBidui);
 
-
+//      }
      //cvReleaseImage(&dst);
 
 

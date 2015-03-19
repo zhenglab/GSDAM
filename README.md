@@ -1,7 +1,8 @@
-GSDAM
-=====
+GSDAM_T
+=======
 
 Grayscale Surface Direction Angle Model.
+
 
 Copyright
 ==========
@@ -15,6 +16,38 @@ results obtained using this software, please use this citation.
     journal = {Microscopy Research and Technique},
     year    = {2014},
     }
+
+
+Manual
+========
+
+
+### Installation
+
+* Open `GSDAM.cbp` in Code::Blocks and build the project named `GSDAM`.
+
+### Run the code
+* Using the command line in terminal, change directory into the location of final file.
+
+		>  cd */bin/Debug/
+
+  \*  represents the directory of the program. 
+  
+
+* Under the directory,  you can get the final image without any parameters. 
+
+		>  ./GSDAM *.jpg 
+
+  \*  .jpg is the input image and it will output a image named "*-Bidui.tif".
+
+* Or run the file with several parameters and exact filenames you want for obtaining intermediate images.
+
+		>  ./GSDAM *.jpg -x x.tif -y y.tif
+
+  x.tif and y.tif are the filenames of output images along with -x and -y as the optional parameters perspectively.
+
+* More details please read 使用说明.txt 
+
 
 Contact
 =======
