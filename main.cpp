@@ -15,6 +15,7 @@ extern IPL contourimage(IPL);
 extern IPL bidui(IPL,IPL);
 extern IPL save(IPL,  char *,int);
 extern int check(char*);
+extern int model(char *);
 
 
 //image_g   image_x    image_y     image_z      image_xz        image_yz        image_o
@@ -444,92 +445,131 @@ cvMorphologyEx(contour_src,image_kai,image_temp,element,CV_MOP_OPEN,3);//可用
 
 
         IPL   imgBidui=bidui(src2,image_kai);
-
-int flag;
-if(argc==2)
-{
-            flag=0;
-            save(imgBidui,argv[1],flag);
-}
-
-else
-{
-            flag=1;
-            for(int n=2;n<argc;n+=2)
-            {
+        int flag;
+        if(argc==2)
+        {
+                flag=0;
+                save(imgBidui,argv[1],flag);
+        }
+        else
+        {
+                flag =1;
+                for(int n=2;n<argc;n+=2)
+                {
                         if(check(argv[n]))
                         {
-                                    //char *image_path=argv[n+1];
                                     if(check(argv[n+1]))
                                     {
-                                                if (!strcmp(argv[n],"-g"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(src3,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-x"))
-                                                {
-                                                        cout << argv[n+1] <<":   "  ;
-                                                        save(image_x,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-xz"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(image_xz,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-yz"))
-                                                {
-                                                        cout << argv[n+1] << ":   " ;
-                                                        save(image_yz,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-y"))
-                                                {
-                                                        cout << argv[n+1] <<":   "  ;
-                                                        save(image_y,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-z"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(image_z,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-o"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(imgBidui,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-k"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(image_kai,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-b"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(image_bi,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                                else if(!strcmp(argv[n],"-c"))
-                                                {
-                                                        cout << argv[n+1] <<":   " ;
-                                                        save(contour_src,argv[n+1],flag);
-                                                        cout << "Done" <<endl;
-                                                }
-                                        }
-                                       else
-                                              cout << argv[n+1]  <<":   "<<"Wrong Format" <<endl;
-                            }
-                            else
-                                    cout << argv[n]  <<":   " <<"Error Option" <<endl;
-            }
-}
+                                            switch(model(argv[n]))
+                                            {
+                                                    case 0:save(src3,argv[n+1],flag);break;
+                                                    case 1:save(image_x,argv[n+1],flag);break;
+                                                    case 2:save(image_y,argv[n+1],flag);break;
+                                                    case 3:save(image_z,argv[n+1],flag);break;
+                                                    case 4:save(image_xz,argv[n+1],flag);break;
+                                                    case 5:save(image_yz,argv[n+1],flag);break;
+                                                    case 6:save(image_kai,argv[n+1],flag);break;
+                                                    case 7:save(image_bi,argv[n+1],flag);break;
+                                                    case 8:save(contour_src,argv[n+1],flag);break;
+                                                    case 9:save(imgBidui,argv[n+1],flag);break;
+                                                   default:break;
+                                            }
+                                    }
+                                     else
+                                            cout << argv[n+1]  <<":   "<<"The Wrong Format" <<endl;
+                        }
+
+                        else
+                                  cout << argv[n]  <<":   " <<"Error Option" <<endl;
+
+                }
+        }
+//==============================================================
+//int flag;
+//if(argc==2)
+//{
+//            flag=0;
+//            save(imgBidui,argv[1],flag);
+//}
+//
+//else
+//{
+//            flag=1;
+//            for(int n=2;n<argc;n+=2)
+//            {
+//                        if(check(argv[n]))
+//                        {
+//                                    //char *image_path=argv[n+1];
+//                                    if(check(argv[n+1]))
+//                                    {
+//                                                if (!strcmp(argv[n],"-g"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(src3,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-x"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   "  ;
+//                                                        save(image_x,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-xz"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(image_xz,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-yz"))
+//                                                {
+//                                                        cout << argv[n+1] << ":   " ;
+//                                                        save(image_yz,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-y"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   "  ;
+//                                                        save(image_y,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-z"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(image_z,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-o"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(imgBidui,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-k"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(image_kai,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-b"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(image_bi,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                                else if(!strcmp(argv[n],"-c"))
+//                                                {
+//                                                        cout << argv[n+1] <<":   " ;
+//                                                        save(contour_src,argv[n+1],flag);
+//                                                        cout << "Done" <<endl;
+//                                                }
+//                                        }
+//                                       else
+//                                              cout << argv[n+1]  <<":   "<<"The Wrong Format" <<endl;
+//                            }
+//                            else
+//                                    cout << argv[n]  <<":   " <<"Error Option" <<endl;
+//            }
+//}
 //#########################################################
 
 

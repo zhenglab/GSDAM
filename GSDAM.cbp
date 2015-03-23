@@ -39,6 +39,7 @@
 		<Unit filename="computerfour.cpp" />
 		<Unit filename="contourimage.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="model.cpp" />
 		<Unit filename="save.cpp" />
 		<Extensions>
 			<code_completion />

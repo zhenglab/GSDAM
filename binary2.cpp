@@ -15,9 +15,7 @@ IPL binary2(IPL pimg,IPL img)
 	float p[256];
 	height = img->height;
 	width = img->width;
-//	cout<<height<<" "<<width<<endl;
 	num = height * width;
-//	cout<<num<<endl;
 	CvScalar s;
 /*------------------------------------------------------------------*/
 

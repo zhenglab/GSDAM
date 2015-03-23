@@ -19,6 +19,7 @@ IplImage* save(IplImage* pImg, char *sring_src, int flag)
     {
                 string savingfile(sring_src);//实验后去除
                 cvSaveImage(savingfile.c_str(),pImg);
+                cout << sring_src <<":   "   << "Done" <<endl;
     }
     return NULL;
 }
