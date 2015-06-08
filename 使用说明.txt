@@ -15,10 +15,20 @@ PS: OpenCV2.4.9与3.0.0的环境下都可以运行
     使用方法：
     1.经过编译，产生“GSDAM”的可执行文件，位于本文件夹的/bin/Debug/GSDAM
     2.在终端上打开以上路径，使用命令如 ./GSDAM *.jpg，其中*.jpg为输入图像，位于本目录下
-    3.默认情况下，不设置输出文件名，则默认输出*-Bidui.jpg
-      可以多个设置参数与输出文件名，例如 " ./GSDAM input.jpg  -x x.tif -y y.tif    "
-     -x，-y  分别为参数    x.tif，y.tif分别为自己设置的输出文件名
-     PS:仅支持tif，png，bmp和jpg格式,推荐保存为.tif
+
+
+二、在Mac OS的使用环境下：
+    
+    使用方法：
+    1.经过Xcode编译，产生“GSDAM”的可执行文件，默认~/Library/Developer/Xcode/DerivedData/Build/Products/Debug下
+    2.在终端上打开以上路径，使用命令如 ./GSDAM *.jpg，其中*.jpg为输入图像，位于本目录下
+
+
+  默认情况下，不设置输出文件名，则默认输出*-final.jpg
+  可以多个设置参数与输出文件名，例如 " ./GSDAM input.jpg  -x x.tif -y y.tif    "
+  -x，-y  分别为参数    x.tif，y.tif分别为自己设置的输出文件名
+  PS:仅支持tif，png，bmp和jpg格式,推荐保存为.tif
+
 
       参数说明：
      -g     灰度图   

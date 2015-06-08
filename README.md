@@ -1,4 +1,4 @@
-GSDAM_T
+GSDAM_T 
 =======
 
 Grayscale Surface Direction Angle Model.
@@ -23,8 +23,8 @@ Manual
 
 
 ### Installation
-
-* Open `GSDAM.cbp` in Code::Blocks and build the project named `GSDAM`.
+* Insure you have installed OpenCV Library.
+* Open `supplementary_material/GSDAM.cbp` in Code::Blocks and build the project named `GSDAM`.
 
 ### Run the code
 * Using the command line in terminal, change directory into the location of final file.
