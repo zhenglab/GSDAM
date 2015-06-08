@@ -13,7 +13,7 @@ const  double  PI=3.1415926;
 double f1_1,f1_2,f1_3,f2_1,f2_2,f2_3,g1_1,g1_2,g1_3,g2_1,g2_2,g2_3,h1_1,h1_2,h1_3,h2_1,h2_2,h2_3,m1_1,m1_2,m1_3,m2_1,m2_2,m2_3;
 double sf_1,sf_2,sf_3,sg_1,sg_2,sg_3,sh_1,sh_2,sh_3,sm_1,sm_2,sm_3;
 double v1_1,v1_2,v1_3,v2_1,v2_2,v2_3,v_1,v_2,v_3;
-double compute_angles(double p1,double p2,double p3,double p4,double * w_1,double * w_2,double * w_3,double * dis)
+double compute_direction_angles(double p1,double p2,double p3,double p4,double * w_1,double * w_2,double * w_3,double * dis)
 {
     f1_1=1; f1_2=0; f1_3=p3-p1;
     f2_1=0; f2_2=1; f2_3=p2-p1;

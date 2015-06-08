@@ -8,7 +8,7 @@
 using namespace std;
 typedef IplImage* IPL;
 
-extern double compute_angles(double,double,double,double,double *,double *,double *,double *);
+extern double compute_direction_angles(double,double,double,double,double *,double *,double *,double *);
 extern IPL map_binarization(IplImage*,IPL);
 extern IPL and_two_binary_imgs(IPL,IPL);
 extern IPL extract_max_area_contour(IPL);
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
             w2_z=&w2;
             w3_z=&w3;
             dis_z=&dis;
-            compute_angles(Ix0y0.val[0],Ix0y1.val[0],Ix1y0.val[0],Ix1y1.val[0],w1_z,w2_z,w3_z,dis_z);
+            compute_direction_angles(Ix0y0.val[0],Ix0y1.val[0],Ix1y0.val[0],Ix1y1.val[0],w1_z,w2_z,w3_z,dis_z);
             //此函数作用是分别求出xyz方向的三个夹角大小
             c1[x][y]=w1;//w1是法向量与与x轴的夹角；
             c2[x][y]=w2;
