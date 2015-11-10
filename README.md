@@ -1,4 +1,4 @@
-GSDAM_T 
+GSDAM 
 =======
 
 Grayscale Surface Direction Angle Model.
